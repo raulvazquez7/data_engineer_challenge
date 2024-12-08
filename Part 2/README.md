@@ -1,32 +1,51 @@
 # AppsFlyer Data Structure Reorganizer
 
-Este proyecto proporciona soluciones para la gestión y transformación de datos de AppsFlyer en Google Cloud Platform.
+Este proyecto proporciona dos soluciones independientes para la gestión y transformación de datos de AppsFlyer en Google Cloud Platform:
+1. Una Cloud Function para reorganizar la estructura de archivos
+2. Una Query SQL para gestionar datos duplicados en lotes
 
 ## Problemas y Soluciones
 
-### 1. Reorganización de Estructura de Archivos
+### Componente 1: Query SQL para Gestión de Lotes
 
 **Problema:**
-AppsFlyer proporciona datos en una estructura: `date/batch/table/data`
-Necesitamos transformarla a: `date/table/batch/data`
-
-**Solución:**
-Implementación de una Cloud Function que:
-1. Se activa cuando se sube un nuevo archivo al bucket de origen
-2. Analiza la ruta del archivo
-3. Reorganiza la estructura manteniendo los mismos datos
-4. Elimina el archivo original
-
-### 2. Gestión de Datos Duplicados
-
-**Problema:**
-Los datos de costos pueden contener múltiples lotes por fecha, generando duplicados.
+- Los datos de costos tienen múltiples lotes por fecha
+- Esto genera duplicados en los análisis
+- Se necesita considerar solo el lote más reciente
 
 **Solución:**
 Query SQL optimizada que:
-1. Identifica el lote más reciente para cada fecha
-2. Elimina datos duplicados
-3. Calcula agregaciones precisas de costos e instalaciones
+- Identifica automáticamente el lote más reciente por fecha
+- Elimina datos duplicados de lotes anteriores
+- Calcula agregaciones precisas de:
+  - Costos totales
+  - Costos originales
+  - Número de instalaciones
+
+**Tecnologías:**
+- SQL (BigQuery compatible)
+- Common Table Expressions (CTE)
+- Window Functions
+
+### Componente 2: Cloud Function para Reorganización de Archivos
+
+**Problema:**
+- AppsFlyer almacena datos en GCS con estructura: `date/batch/table/data`
+- Esta estructura no es óptima para la ingesta en base de datos
+- Se necesita transformar a: `date/table/batch/data`
+
+**Solución:**
+Cloud Function en Python que:
+- Se activa automáticamente cuando llega un nuevo archivo
+- Analiza la ruta del archivo entrante
+- Crea nueva estructura manteniendo los mismos datos
+- Elimina el archivo original
+- Zero-maintenance: solo se ejecuta cuando es necesario
+
+**Tecnologías:**
+- Google Cloud Functions
+- Python 3.9+
+- Google Cloud Storage API
 
 ## Estructura del Proyecto
 ```
