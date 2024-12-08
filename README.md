@@ -86,3 +86,85 @@ Both queries follow RevenueCat's official calculation methods:
 ## Implementation Details
 
 ### Monthly Query Structure
+
+sql
+1. date_ranges CTE
+2. mrr_calc CTE
+3. active_subscriptions CTE
+4. churned_users CTE
+5. Final SELECT with metrics
+
+
+### Daily Query Structure
+
+sql
+1. date_ranges CTE
+2. filtered_data CTE
+3. daily_metrics CTE
+4. Final SELECT with dimensions
+
+## Use Case Scenarios
+
+### Monthly Query
+- When to use:
+  - Reporting to stakeholders
+  - Analyzing subscription growth
+  - Monitoring business health
+  - Tracking retention metrics
+
+### Daily Query
+- When to use:
+  - Analyzing marketing campaigns
+  - Monitoring regional performance
+  - Product-level analysis
+  - Platform comparison
+  - Trial funnel optimization
+
+## Dashboard Integration
+
+### Monthly Dashboard
+- MRR trend line
+- Active subscriptions growth
+- ARPU development
+- Churn rate monitoring
+
+### Daily Dashboard
+- Revenue by dimension
+- Trial conversion funnel
+- Geographic heat maps
+- Product performance comparison
+
+## Best Practices
+
+### Query Maintenance
+- Update date ranges regularly
+- Monitor for new product durations
+- Validate against RevenueCat dashboard
+- Document any custom modifications
+
+### Data Analysis
+- Cross-reference between queries
+- Validate totals match
+- Monitor for anomalies
+- Regular reconciliation with RevenueCat dashboard
+
+## Technical Notes
+
+### Performance Considerations
+- Both queries use CTEs for readability
+- Filtered_data CTE reduces data scanning
+- Appropriate indexing recommended
+- Consider partitioning for large datasets
+
+### Data Requirements
+- RevenueCat data export table
+- Complete transaction history
+- Valid subscription metadata
+- Accurate trial and conversion tracking
+
+## References
+- [RevenueCat Active Subscriptions Documentation](https://www.revenuecat.com/docs/dashboard-and-metrics/charts/active-subscriptions-chart)
+- [RevenueCat MRR Calculation Guide](https://www.revenuecat.com/docs/integrations/scheduled-data-exports)
+- [RevenueCat Metrics Definitions](https://www.revenuecat.com/docs/dashboard-and-metrics)
+
+
