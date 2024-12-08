@@ -25,7 +25,18 @@ La solución implementa una Cloud Function que:
 
 1. Clonar el repositorio:
 
+```
 bash
 git clone https://github.com/tu-usuario/appsflyer-reorganizer.git
 cd appsflyer-reorganizer
+```
+
+2. Crear y activar entorno virtual:
+
+```
+bash
+python -m venv venv
+source venv/bin/activate # En Windows: venv\Scripts\activate
+pip install -r src/requirements.txt
+```
 
