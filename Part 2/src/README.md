@@ -40,3 +40,47 @@ source venv/bin/activate # En Windows: venv\Scripts\activate
 pip install -r src/requirements.txt
 ```
 
+3. Configurar Google Cloud:
+```
+bash
+gcloud auth login
+gcloud config set project TU_PROYECTO_ID
+```
+
+4. Desplegar la función:
+```
+bash
+gcloud functions deploy reorganize_storage_structure \
+--runtime python39 \
+--trigger-event google.storage.object.finalize \
+--trigger-resource TU_BUCKET_ORIGEN \
+--source src \
+--region REGION
+```
+
+## Pruebas
+
+1. Crear un bucket de prueba:
+```
+bash
+gsutil mb gs://tu-bucket-prueba
+```
+
+2. Subir un archivo de prueba:
+```
+bash
+gsutil cp test.csv gs://tu-bucket-prueba/2024-03-20/batch1/users/test.csv
+```
+
+3. Verificar la reorganización:
+```
+bash
+gsutil ls gs://tu-bucket-prueba/2024-03-20/users/batch1/
+```
+
+
+## Estructura del Proyecto
+- `src/`: Código fuente de la función
+- `tests/`: Tests unitarios
+- `.gitignore`: Archivos a ignorar por git
+
