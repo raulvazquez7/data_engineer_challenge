@@ -42,6 +42,28 @@ This repository contains two complementary SQL queries for analyzing RevenueCat 
 - Geographic analysis
 - Platform comparison
 
+### 3. Cohort LTV Analysis Query
+**Purpose**: Analizes the lifetime value (LTV) of paying users by cohorts based on the first purchase date.
+
+**Key Metrics**:
+- Cohort size (unique users)
+- Average LTV per periods:
+  - 7 days
+  - 14 days
+  - 21 days
+  - 1 month
+  - 3 months
+  - 6 months
+  - 12 months
+  - 18 months
+  - 24 months
+
+**Use Cases**:
+- Monetized retention analysis
+- Long-term customer value evaluation
+- Optimizing acquisition strategies
+- Predicting future revenue
+
 ## Key Differences
 
 ### 1. Time Granularity
@@ -134,6 +156,12 @@ sql
 - Geographic heat maps
 - Product performance comparison
 
+### Cohort Dashboard
+- Cohort table with LTV periods
+- Heat map of LTV evolution
+- Trend line chart by cohort
+- Cohort comparison by period
+
 ## Best Practices
 
 ### Query Maintenance
@@ -147,6 +175,12 @@ sql
 - Validate totals match
 - Monitor for anomalies
 - Regular reconciliation with RevenueCat dashboard
+
+### Cohort Analysis
+- Use NULL for periods with insufficient data
+- Consider the elapsed time when analyzing recent cohorts
+- Monitor anomalies in cohort behavior
+- Validate against RevenueCat dashboard metrics
 
 ## Technical Notes
 
@@ -162,9 +196,16 @@ sql
 - Valid subscription metadata
 - Accurate trial and conversion tracking
 
+### Cohort Calculation Considerations
+- Values are cumulative within each period
+- Each cohort retains its original users
+- Longer periods include all previous transactions
+- Refunds are excluded for precision in LTV
+
 ## References
 - [RevenueCat Active Subscriptions Documentation](https://www.revenuecat.com/docs/dashboard-and-metrics/charts/active-subscriptions-chart)
 - [RevenueCat MRR Calculation Guide](https://www.revenuecat.com/docs/integrations/scheduled-data-exports)
 - [RevenueCat Metrics Definitions](https://www.revenuecat.com/docs/dashboard-and-metrics)
+- [RevenueCat LTV Documentation](https://www.revenuecat.com/docs/metrics-definitions#customer-lifetime-value)
 
 
