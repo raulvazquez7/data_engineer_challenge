@@ -47,6 +47,8 @@ The query applies consistent filters to ensure data quality:
 - Churn is considered when `unsubscribe_detected_at` exists
 - MRR calculations assume consistent billing cycles
 
+***
+
 ### 2. Daily Segmented Metrics Query
 **Purpose**: This query provides granular daily metrics with multiple dimensions for detailed analysis and segmentation.
 
