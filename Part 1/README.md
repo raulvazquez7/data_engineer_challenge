@@ -5,6 +5,8 @@ This repository contains three SQL queries working with RevenueCat's Scheduled D
 
 **Dashboard link:** https://lookerstudio.google.com/u/2/reporting/7fe52832-4598-4ccd-8ba1-fb008f92df85/page/p_fwj64pennd
 
+The dashboard allows you to analyze the different metrics created by the queries. On the first page, we can find an overview of the aggregated metrics at the monthly level, as well as the LTV. On the second page, we find other metrics that can be analyzed in more detail, segmented by different dimensions.
+
 ## Queries Description
 
 ### 1. Monthly Subscription Metrics Query
