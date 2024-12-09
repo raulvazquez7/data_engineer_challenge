@@ -6,10 +6,13 @@ Este repositorio contiene las tres consultas SQL trabjadas en Bigquery y el enla
 
 **Enlace al dashboard:** https://lookerstudio.google.com/u/2/reporting/7fe52832-4598-4ccd-8ba1-fb008f92df85/page/p_fwj64pennd
 
-## Queries Description
+## Descripción de las queries
 
-### 1. Monthly Subscription Metrics Query
+### 1. labhouse_monthly_output
 **Purpose**: Provides high-level monthly KPIs for business performance monitoring and strategic decision-making.
+
+[See csv output here!](https://github.com/raulvazquez7/analytics-engineer-challenge/blob/main/Part1/Output/monthly_recurrence_rate.csv)
+[See csv output here!](https://github.com/raulvazquez7/analytics-engineer-challenge/blob/main/Part1/Output/monthly_recurrence_rate.csv)
 
 **Key Metrics**:
 - Monthly Recurring Revenue (MRR)
