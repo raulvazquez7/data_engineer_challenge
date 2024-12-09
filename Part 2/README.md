@@ -22,7 +22,6 @@ A Cloud Function that automatically reorganizes the file structure of data files
 ## Features
 - Automatically triggered when files are uploaded to GCS
 - Transforms path structure while maintaining file integrity
-- Handles both cost data and attribution data
 - Maintains original file metadata
 - Includes error handling and logging
 
