@@ -50,6 +50,9 @@ The query applies consistent filters to ensure data quality:
 - Churn is considered when `unsubscribe_detected_at` exists
 - MRR calculations assume consistent billing cycles
 
+#### Data Granularity
+- All metrics are calculated on a monthly basis
+
 ***
 
 ### 2. Daily Segmented Metrics Query
