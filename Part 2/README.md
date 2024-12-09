@@ -67,6 +67,8 @@ Transformed path:
 ### 2.1 Query Solution
 AppsFlyer sends four daily data batches with increasingly updated information. To prevent data duplication, we implemented a SQL query that selects only the most recent batch for each date.
 
+[See query here!](https://github.com/raulvazquez7/data_engineer_challenge/blob/main/Part%202/sql/latest_batch_costs.sql)
+
 #### Features
 - Uses Window Functions (ROW_NUMBER) to identify the latest batch
 - Groups data by date and app_id
