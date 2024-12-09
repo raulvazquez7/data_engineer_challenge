@@ -1,8 +1,10 @@
 
-# RevenueCat Analytics Queries
+# RevenueCat - KPIs and Data Visualization
 
-## Overview
-This repository contains two complementary SQL queries for analyzing RevenueCat subscription data at different granularities and purposes. Both queries follow RevenueCat's official methodology and best practices.
+## Resumen
+Este repositorio contiene las tres consultas SQL trabjadas en Bigquery y el enlace al dashboard creado en Lookerstudio. Estas queries trabajan sobre el Scheduled Data Exports de revenueCat.
+
+**Enlace al dashboard:** https://lookerstudio.google.com/u/2/reporting/7fe52832-4598-4ccd-8ba1-fb008f92df85/page/p_fwj64pennd
 
 ## Queries Description
 
