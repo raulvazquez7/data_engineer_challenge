@@ -10,7 +10,7 @@ This repository contains three SQL queries working with RevenueCat's Scheduled D
 ### 1. Monthly Subscription Metrics Query
 **Purpose**: This query processes monthly global metrics that help understand business health and its evolution over time.
 
-[See csv query here!](https://github.com/raulvazquez7/data_engineer_challenge/blob/main/Part%201/queries/labhouse_monthly_output.sql)
+[See query here!](https://github.com/raulvazquez7/data_engineer_challenge/blob/main/Part%201/queries/labhouse_monthly_output.sql)
 [See csv output here!](https://github.com/raulvazquez7/data_engineer_challenge/blob/main/Part%201/data/monthly_output.csv)
 
 #### Data Filtering
@@ -55,7 +55,7 @@ The query applies consistent filters to ensure data quality:
 ### 2. Daily Segmented Metrics Query
 **Purpose**: This query provides granular daily metrics with multiple dimensions for detailed analysis and segmentation.
 
-[See csv query here!](https://github.com/raulvazquez7/data_engineer_challenge/blob/main/Part%201/queries/labhouse_segmented_output.sql)
+[See query here!](https://github.com/raulvazquez7/data_engineer_challenge/blob/main/Part%201/queries/labhouse_segmented_output.sql)
 [See csv output here!](https://github.com/raulvazquez7/data_engineer_challenge/blob/main/Part%201/data/segmented_output.csv)
 
 #### Data Filtering
