@@ -1,217 +1,48 @@
-
 # RevenueCat - KPIs and Data Visualization
 
-## Resumen
-Este repositorio contiene las tres consultas SQL trabjadas en Bigquery y el enlace al dashboard creado en Lookerstudio. Estas queries trabajan sobre el Scheduled Data Exports de revenueCat.
+## Overview
+This repository contains three SQL queries working with RevenueCat's Scheduled Data Exports and a link to the dashboard created in Looker Studio.
 
-**Enlace al dashboard:** https://lookerstudio.google.com/u/2/reporting/7fe52832-4598-4ccd-8ba1-fb008f92df85/page/p_fwj64pennd
+**Dashboard link:** https://lookerstudio.google.com/u/2/reporting/7fe52832-4598-4ccd-8ba1-fb008f92df85/page/p_fwj64pennd
 
-## Descripción de las queries
+## Queries Description
 
-### 1. labhouse_monthly_output
-**Purpose**: Provides high-level monthly KPIs for business performance monitoring and strategic decision-making.
+### 1. Monthly Subscription Metrics Query
+**Purpose**: This query processes monthly global metrics that help understand business health and its evolution over time.
 
-[See csv output here!](https://github.com/raulvazquez7/analytics-engineer-challenge/blob/main/Part1/Output/monthly_recurrence_rate.csv)
-[See csv output here!](https://github.com/raulvazquez7/analytics-engineer-challenge/blob/main/Part1/Output/monthly_recurrence_rate.csv)
+#### Data Filtering
+The query applies consistent filters to ensure data quality:
+- `is_trial_period = FALSE`: Excludes trial periods
+- `ownership_type != 'FAMILY_SHARED'`: Excludes shared family subscriptions
+- `store != 'promotional'`: Excludes promotions and free codes
+- `is_sandbox = FALSE`: Excludes test/development data
+- `TIMESTAMP_DIFF(end_time, start_time, SECOND) > 0`: Validates subscription duration
 
-**Key Metrics**:
-- Monthly Recurring Revenue (MRR)
-- Active Subscriptions
-- Average Revenue Per User (ARPU)
-- Churn Rate
+#### Key Metrics
 
-**Use Cases**:
-- Board reporting
-- Strategic planning
-- Investor updates
-- Long-term trend analysis
+**1. Monthly Recurring Revenue (MRR)**
+- Normalizes revenue based on product duration:
+  - Weekly (P1W): price × 4
+  - Monthly (P1M): price × 1
+  - Yearly (P1Y): price × 0.08333 (1/12)
 
-### 2. Daily Segmented Metrics Query
-**Purpose**: Offers detailed daily metrics with multiple dimensions for operational analysis and segmentation.
+**2. Active Subscriptions**
+- Counts active users at the end of each month
+- Considers subscriptions where:
+  - `effective_end_time > current_date`
+  - `start_time <= current_date`
 
-**Key Metrics**:
-- Daily Proceeds
-- Transaction Count
-- New vs Renewal Revenue
-- Trial Starts and Conversions
+**3. Average Revenue Per User (ARPU)**
+- Calculated as: `MRR / total_active_subscribers`
+- Represents average monthly revenue per active user
 
-**Dimensions**:
-- Country
-- Product Identifier
-- Store
-- Platform
-- Product Duration
+**4. Churn Rate**
+- Percentage of users canceling in the month
+- Based on `unsubscribe_detected_at`
+- Formula: `(churned_users / active_users) * 100`
 
-**Use Cases**:
-- Marketing campaign analysis
-- Product performance monitoring
-- Geographic analysis
-- Platform comparison
-
-### 3. Cohort LTV Analysis Query
-**Purpose**: Analizes the lifetime value (LTV) of paying users by cohorts based on the first purchase date.
-
-**Key Metrics**:
-- Cohort size (unique users)
-- Average LTV per periods:
-  - 7 days
-  - 14 days
-  - 21 days
-  - 1 month
-  - 3 months
-  - 6 months
-  - 12 months
-  - 18 months
-  - 24 months
-
-**Use Cases**:
-- Monetized retention analysis
-- Long-term customer value evaluation
-- Optimizing acquisition strategies
-- Predicting future revenue
-
-## Key Differences
-
-### 1. Time Granularity
-- **Monthly Query**: End-of-month snapshots
-- **Daily Query**: Daily aggregations
-
-### 2. Metric Focus
-- **Monthly Query**: 
-  - Focuses on subscription health metrics
-  - Emphasizes recurring revenue patterns
-  - Tracks user retention through churn
-- **Daily Query**:
-  - Focuses on transactional metrics
-  - Emphasizes revenue segmentation
-  - Tracks trial performance
-
-### 3. Data Structure
-- **Monthly Query**:
-  - Uses point-in-time calculations
-  - Implements RevenueCat's active subscription logic
-  - Calculates derived metrics (ARPU, churn)
-- **Daily Query**:
-  - Uses aggregated daily transactions
-  - Implements RevenueCat's proceeds calculation
-  - Segments data across multiple dimensions
-
-## Common Elements
-
-### Data Quality Filters
-Both queries consistently apply these filters:
-- Exclude family shared subscriptions
-- Exclude promotional transactions
-- Exclude sandbox data
-- Filter out invalid transactions
-
-### RevenueCat Methodology
-Both queries follow RevenueCat's official calculation methods:
-- Revenue normalization
-- Subscription status determination
-- Trial handling
-
-## Implementation Details
-
-### Monthly Query Structure
-
-sql
-1. date_ranges CTE
-2. mrr_calc CTE
-3. active_subscriptions CTE
-4. churned_users CTE
-5. Final SELECT with metrics
-
-
-### Daily Query Structure
-
-sql
-1. date_ranges CTE
-2. filtered_data CTE
-3. daily_metrics CTE
-4. Final SELECT with dimensions
-
-## Use Case Scenarios
-
-### Monthly Query
-- When to use:
-  - Reporting to stakeholders
-  - Analyzing subscription growth
-  - Monitoring business health
-  - Tracking retention metrics
-
-### Daily Query
-- When to use:
-  - Analyzing marketing campaigns
-  - Monitoring regional performance
-  - Product-level analysis
-  - Platform comparison
-  - Trial funnel optimization
-
-## Dashboard Integration
-
-### Monthly Dashboard
-- MRR trend line
-- Active subscriptions growth
-- ARPU development
-- Churn rate monitoring
-
-### Daily Dashboard
-- Revenue by dimension
-- Trial conversion funnel
-- Geographic heat maps
-- Product performance comparison
-
-### Cohort Dashboard
-- Cohort table with LTV periods
-- Heat map of LTV evolution
-- Trend line chart by cohort
-- Cohort comparison by period
-
-## Best Practices
-
-### Query Maintenance
-- Update date ranges regularly
-- Monitor for new product durations
-- Validate against RevenueCat dashboard
-- Document any custom modifications
-
-### Data Analysis
-- Cross-reference between queries
-- Validate totals match
-- Monitor for anomalies
-- Regular reconciliation with RevenueCat dashboard
-
-### Cohort Analysis
-- Use NULL for periods with insufficient data
-- Consider the elapsed time when analyzing recent cohorts
-- Monitor anomalies in cohort behavior
-- Validate against RevenueCat dashboard metrics
-
-## Technical Notes
-
-### Performance Considerations
-- Both queries use CTEs for readability
-- Filtered_data CTE reduces data scanning
-- Appropriate indexing recommended
-- Consider partitioning for large datasets
-
-### Data Requirements
-- RevenueCat data export table
-- Complete transaction history
-- Valid subscription metadata
-- Accurate trial and conversion tracking
-
-### Cohort Calculation Considerations
-- Values are cumulative within each period
-- Each cohort retains its original users
-- Longer periods include all previous transactions
-- Refunds are excluded for precision in LTV
-
-## References
-- [RevenueCat Active Subscriptions Documentation](https://www.revenuecat.com/docs/dashboard-and-metrics/charts/active-subscriptions-chart)
-- [RevenueCat MRR Calculation Guide](https://www.revenuecat.com/docs/integrations/scheduled-data-exports)
-- [RevenueCat Metrics Definitions](https://www.revenuecat.com/docs/dashboard-and-metrics)
-- [RevenueCat LTV Documentation](https://www.revenuecat.com/docs/metrics-definitions#customer-lifetime-value)
-
-
+#### Key Assumptions
+- Subscriptions without `product_duration` are treated as monthly
+- Analysis period is fixed between '2023-07-01' and '2024-02-28'
+- Churn is considered when `unsubscribe_detected_at` exists
+- MRR calculations assume consistent billing cycles
