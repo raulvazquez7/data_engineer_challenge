@@ -1,5 +1,19 @@
 # Storage Path Restructuring Function
 
+This repository contains solutions for optimizing AppsFlyer's data processing pipeline, including storage restructuring and data deduplication.
+
+## Repository Structure
+```
+.
+├── Part 2/
+│   ├── sql/
+│   │   └── latest_batch_costs.sql    # SQL query for data deduplication
+│   ├── src/
+│   │   ├── main.py                   # Cloud Function implementation
+│   │   └── requirements.txt          # Python dependencies
+│   └── README.md                     # Project documentation
+```
+
 ## Part 1: Storage Path Restructuring
 
 ### 1.1 Cloud Function Solution
