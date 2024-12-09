@@ -105,3 +105,50 @@ The query applies consistent filters to ensure data quality:
 - All metrics are calculated on a daily basis
 - Allows for flexible period-over-period analysis
 - Enables detailed trend analysis by segment
+
+***
+
+### 3. Cohort LTV Analysis Query
+**Purpose**: This query analyzes customer Lifetime Value (LTV) by cohorts based on first purchase date, providing insights into long-term customer value and retention patterns.
+
+[See query here!](https://github.com/raulvazquez7/data_engineer_challenge/blob/main/Part%201/queries/labhouse_ltv_output.sql)
+[See csv output here!](https://github.com/raulvazquez7/data_engineer_challenge/blob/main/Part%201/data/ltv_output.csv)
+
+#### Data Filtering
+The query applies consistent filters to ensure data quality:
+- `is_trial_period = FALSE`: Excludes trial periods
+- `ownership_type != 'FAMILY_SHARED'`: Excludes shared family subscriptions
+- `store != 'promotional'`: Excludes promotions and free codes
+- `is_sandbox = FALSE`: Excludes test/development data
+- `TIMESTAMP_DIFF(end_time, start_time, SECOND) > 0`: Validates subscription duration
+- `price_in_usd > 0`: Ensures only paid transactions
+- `refunded_at IS NULL`: Excludes refunded transactions
+
+#### Key Metrics
+
+**1. Cohort Size**
+- Number of unique users who made their first purchase on each date
+- Represents the initial size of each customer cohort
+
+**2. Average LTV by Time Periods**
+- Calculated for multiple time windows:
+  - Short term: 7 days, 14 days, 21 days
+  - Medium term: 1 month, 3 months, 6 months
+  - Long term: 12 months, 18 months, 24 months
+- Each period includes cumulative revenue from first purchase
+
+**3. Net Revenue Calculation**
+- Formula: `price_in_usd * (1 - tax_percentage - commission_percentage)`
+- Accounts for platform fees and taxes
+- Provides actual realized revenue per customer
+
+#### Key Assumptions
+- Cohort date is determined by first non-trial purchase
+- LTV is calculated on net revenue (after fees and taxes)
+- Revenue is cumulative within each time period
+- Each user belongs to exactly one cohort
+
+#### Data Granularity
+- Cohorts are created at daily level
+- LTV is tracked across multiple time periods
+- Enables both short-term and long-term value analysis
