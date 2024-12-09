@@ -30,6 +30,7 @@ filtered_data AS (
   WHERE ownership_type != 'FAMILY_SHARED'
     AND store != 'promotional'
     AND is_sandbox = FALSE
+    AND TIMESTAMP_DIFF(end_time, start_time, SECOND) > 0
 ),
 
 daily_metrics AS (
