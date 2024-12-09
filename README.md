@@ -1,5 +1,5 @@
-# RevenueCat Analytics Queries
+# Data Engineering - Technical Test
 
 ## Overview
-This repository contains two complementary SQL queries for analyzing RevenueCat subscription data at different granularities and purposes. Both queries follow RevenueCat's official methodology and best practices.
+This repository will contain three main folders, each containing the content that solves the exercises proposed in the technical test.
 
