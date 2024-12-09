@@ -35,7 +35,7 @@ ltv_periods AS (
   SELECT
     cohort_date,
     rc_original_app_user_id,
-    -- LTV por períodos específicos 
+    -- LTV by specific periods
     SUM(CASE 
       WHEN DATE_DIFF(DATE(start_time), cohort_date, DAY) <= 7 
       THEN net_revenue ELSE 0 
