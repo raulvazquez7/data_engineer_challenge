@@ -1,7 +1,9 @@
 # Storage Path Restructuring Function
 
-## Overview
-This Cloud Function automatically reorganizes the file structure of data files uploaded to Google Cloud Storage. It's specifically designed to transform AppsFlyer's data organization pattern from `date/batch/table/data` to `date/table/batch/data` for optimal database ingestion.
+## Part 1: Storage Path Restructuring
+
+### 1.1 Cloud Function Solution
+A Cloud Function that automatically reorganizes the file structure of data files uploaded to Google Cloud Storage, transforming AppsFlyer's data organization pattern from `date/batch/table/data` to `date/table/batch/data`.
 
 ## Features
 - Automatically triggered when files are uploaded to GCS
@@ -44,8 +46,42 @@ Original path:
 Transformed path:
 `2024-01-01/sales/12345/sales_data.csv`
 
-## Monitoring
-- Monitor function execution in Google Cloud Console
-- Check function logs for execution details and any potential errors
-- Verify file structure changes in Cloud Storage
+***
 
+## Part 2: Data Deduplication
+
+### 2.1 Query Solution
+AppsFlyer sends four daily data batches with increasingly updated information. To prevent data duplication, we implemented a SQL query that selects only the most recent batch for each date.
+
+#### Features
+- Uses Window Functions (ROW_NUMBER) to identify the latest batch
+- Groups data by date and app_id
+- Aggregates cost and install metrics
+- Orders results by date in descending order
+
+#### Query Implementation
+```sql
+WITH latest_batch AS (
+    SELECT 
+        date,
+        app_id,
+        cost,
+        original_cost,
+        installs,
+        ROW_NUMBER() OVER (PARTITION BY date, app_id ORDER BY batch DESC) as rn
+    FROM appsflyer_cost.ext_channel
+)
+SELECT 
+    date,
+    app_id,
+    CAST(SUM(cost) AS int) AS cost_cost,
+    CAST(SUM(original_cost) AS int) AS cost_original_cost,
+    SUM(installs) AS cost_installs
+FROM latest_batch
+WHERE rn = 1
+GROUP BY 
+    date,
+    app_id
+ORDER BY 
+    date DESC;
+```
