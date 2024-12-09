@@ -1,5 +1,4 @@
 CREATE OR REPLACE TABLE `labhouse.cohort_ltv` AS
-
 WITH first_purchase_dates AS (
   SELECT
     rc_original_app_user_id,
@@ -10,6 +9,7 @@ WITH first_purchase_dates AS (
     AND store != 'promotional'
     AND is_sandbox = FALSE
     AND price_in_usd > 0
+    AND TIMESTAMP_DIFF(end_time, start_time, SECOND) > 0
   GROUP BY 1
 ),
 
@@ -27,6 +27,7 @@ cohort_revenue AS (
     AND data.store != 'promotional'
     AND data.is_sandbox = FALSE
     AND data.price_in_usd > 0
+    AND TIMESTAMP_DIFF(data.end_time, data.start_time, SECOND) > 0
     AND refunded_at IS NULL  
 ),
 
@@ -34,7 +35,7 @@ ltv_periods AS (
   SELECT
     cohort_date,
     rc_original_app_user_id,
-    -- LTV por períodos específicos
+    -- LTV por períodos específicos 
     SUM(CASE 
       WHEN DATE_DIFF(DATE(start_time), cohort_date, DAY) <= 7 
       THEN net_revenue ELSE 0 
