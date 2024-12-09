@@ -37,10 +37,6 @@ The goal is to maintain a complete historical dataset in BigQuery, independent o
 - **Storage Costs**: The historical dataset will grow indefinitely, so consider BigQuery storage costs.
 - **Archiving Strategy**: Archive very old data to cheaper storage (e.g., GCS in parquet/ORC format) if BigQuery costs become high, keeping only recent data "hot" in BigQuery.
 
-### Governance and Security
-
-- **Access Controls**: Ensure proper access controls for the historical dataset.
-- **Compliance**: Manage compliance with data retention regulations.
 
 ## Summary
 
